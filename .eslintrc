@@ -1,0 +1,12 @@
+{
+	"env": {
+		"es2021": true
+	},
+	"extends": [
+		"@galdanm/eslint-config-jest",
+		"@galdanm/eslint-config-typescript"
+	],
+	"rules": {
+		"jest/prefer-expect-assertions": "off"
+	}
+}

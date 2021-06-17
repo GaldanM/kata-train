@@ -1,24 +1,39 @@
-import type ReservationRequest from "./ReservationRequest";
 import Reservation from "./Reservation";
-import Seat from "./Seat";
-import type TrainDataService from "./TrainDataService";
+
+import type ReservationRequest from "./ReservationRequest";
+import type TrainService from "./TrainService";
+import type { Coach, Train } from "./types";
 
 class TicketOffice {
-  private readonly trainDataService: TrainDataService;
+  private readonly trainDataService: TrainService;
 
-  constructor(trainDataService: TrainDataService) {
+  constructor(trainDataService: TrainService) {
     this.trainDataService = trainDataService;
   }
 
   makeReservation(request: ReservationRequest): Reservation {
-    if (this.trainDataService.getFulfillment() > 70) {
+    const train = this.trainDataService.getTrainData(request.trainId);
+
+    const coachWithEnoughAvailableSeats = pickCoachWithEnoughAvailableSeats(train, request.seatCount);
+
+    if (!coachWithEnoughAvailableSeats) {
       return new Reservation(request.trainId, [], "");
     }
 
-    const seats = Array(request.seatCount).map((element, index) => new Seat("A", index));
+    const seatsToReserve = coachWithEnoughAvailableSeats.seats.slice(0, request.seatCount);
 
-    return new Reservation(request.trainId, seats, "foobar");
+    return new Reservation(request.trainId, seatsToReserve, "foobar");
   }
+}
+
+function pickCoachWithEnoughAvailableSeats(train: Train, seatCount: number): Coach {
+  const [coachWithEnoughAvailableSeats] = train.coaches.filter((coach) => {
+    const availableSeats = coach.seats.filter((seat) => seat.bookingReference === "");
+
+    return availableSeats.length >= seatCount;
+  });
+
+  return coachWithEnoughAvailableSeats;
 }
 
 export default TicketOffice;

@@ -1,4 +1,4 @@
-import type Seat from "./Seat";
+import type { Seat } from "./types";
 
 class Reservation {
   trainId: string;

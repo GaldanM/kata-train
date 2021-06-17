@@ -31,6 +31,16 @@ describe("ticketOffice tests", () => {
     expect(reservation.bookingId).toStrictEqual("");
     expect(reservation.seats).toHaveLength(0);
   });
+  it("should not book when more 70% or more of overall seats are booked", () => {
+    const trainService = new TrainServiceTests();
+    jest.spyOn(trainService, "getTrainData").mockImplementation(() => mockedTrains.seventyPercentOverallBooked);
+    const reservationRequest = new BuildReservationRequest().build();
+
+    const reservation = new TicketOffice(trainService).makeReservation(reservationRequest);
+
+    expect(reservation.bookingId).toStrictEqual("");
+    expect(reservation.seats).toHaveLength(0);
+  });
 });
 
 class BuildReservationRequest {

@@ -14,6 +14,12 @@ class TicketOffice {
   makeReservation(request: ReservationRequest): Reservation {
     const train = this.trainDataService.getTrainData(request.trainId);
 
+    const isTrainBooked = checkIfTrainIsBooked(train);
+
+    if (isTrainBooked) {
+      return new Reservation(request.trainId, [], "");
+    }
+
     const coachWithEnoughAvailableSeats = pickCoachWithEnoughAvailableSeats(train, request.seatCount);
 
     if (!coachWithEnoughAvailableSeats) {
@@ -26,7 +32,19 @@ class TicketOffice {
   }
 }
 
-function pickCoachWithEnoughAvailableSeats(train: Train, seatCount: number): Coach {
+function checkIfTrainIsBooked(train: Train): boolean {
+  const { bookedSeats, totalSeats } = train.coaches.reduce(
+    (acc, current) => ({
+      bookedSeats: acc.bookedSeats + current.seats.filter((seat) => seat.bookingReference !== "").length,
+      totalSeats: acc.totalSeats + current.seats.length,
+    }),
+    { bookedSeats: 0, totalSeats: 0 }
+  );
+
+  return (bookedSeats / totalSeats) * 100 >= 70;
+}
+
+function pickCoachWithEnoughAvailableSeats(train: Train, seatCount: number): Coach | undefined {
   const [coachWithEnoughAvailableSeats] = train.coaches.filter((coach) => {
     const availableSeats = coach.seats.filter((seat) => seat.bookingReference === "");
 

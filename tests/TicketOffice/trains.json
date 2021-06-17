@@ -18,9 +18,28 @@
 				"name": "A",
 				"seats": [
 					{"seatNumber": "1", "bookingReference": "foobar"},
-					{"seatNumber": "2", "bookingReference": "fooz"},
+					{"seatNumber": "2", "bookingReference": ""}
+				]
+			}
+		]
+	},
+	"seventyPercentOverallBooked": {
+		"coaches": [
+			{
+				"name": "A",
+				"seats": [
+					{"seatNumber": "1", "bookingReference": ""},
+					{"seatNumber": "2", "bookingReference": ""},
 					{"seatNumber": "3", "bookingReference": "faz"},
-					{"seatNumber": "4", "bookingReference": ""}
+					{"seatNumber": "4", "bookingReference": "fouz"}
+				]
+			},
+			{
+				"name": "B",
+				"seats": [
+					{"seatNumber": "1", "bookingReference": "foobar"},
+					{"seatNumber": "2", "bookingReference": "fooz"},
+					{"seatNumber": "3", "bookingReference": "faz"}
 				]
 			}
 		]

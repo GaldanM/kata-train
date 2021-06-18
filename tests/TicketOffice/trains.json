@@ -7,7 +7,11 @@
 					{"seatNumber": "1", "bookingReference": "foobar"},
 					{"seatNumber": "2", "bookingReference": ""},
 					{"seatNumber": "3", "bookingReference": ""},
-					{"seatNumber": "4", "bookingReference": ""}
+					{"seatNumber": "4", "bookingReference": ""},
+					{"seatNumber": "5", "bookingReference": ""},
+					{"seatNumber": "6", "bookingReference": ""},
+					{"seatNumber": "7", "bookingReference": ""},
+					{"seatNumber": "8", "bookingReference": ""}
 				]
 			}
 		]
@@ -19,6 +23,24 @@
 				"seats": [
 					{"seatNumber": "1", "bookingReference": "foobar"},
 					{"seatNumber": "2", "bookingReference": ""}
+				]
+			},
+			{
+				"name": "B",
+				"seats": [
+					{"seatNumber": "1", "bookingReference": ""}
+				]
+			},
+			{
+				"name": "C",
+				"seats": [
+					{"seatNumber": "1", "bookingReference": ""}
+				]
+			},
+			{
+				"name": "D",
+				"seats": [
+					{"seatNumber": "1", "bookingReference": ""}
 				]
 			}
 		]
@@ -62,6 +84,29 @@
 				"name": "B",
 				"seats": [
 					{"seatNumber": "1", "bookingReference": ""}
+				]
+			}
+		]
+	},
+	"seventyPercentOverallAlmostBooked": {
+		"coaches": [
+			{
+				"name": "A",
+				"seats": [
+					{"seatNumber": "1", "bookingReference": ""},
+					{"seatNumber": "2", "bookingReference": ""},
+					{"seatNumber": "3", "bookingReference": ""},
+					{"seatNumber": "4", "bookingReference": ""},
+					{"seatNumber": "5", "bookingReference": "faz"},
+					{"seatNumber": "6", "bookingReference": "fouz"}
+				]
+			},
+			{
+				"name": "B",
+				"seats": [
+					{"seatNumber": "1", "bookingReference": "foobar"},
+					{"seatNumber": "2", "bookingReference": "fooz"},
+					{"seatNumber": "3", "bookingReference": "faz"}
 				]
 			}
 		]

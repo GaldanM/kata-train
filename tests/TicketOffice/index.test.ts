@@ -31,7 +31,7 @@ describe("ticketOffice tests", () => {
     expect(reservation.bookingId).toStrictEqual("");
     expect(reservation.seats).toHaveLength(0);
   });
-  it("should not book when more 70% or more of overall seats are booked", () => {
+  it("should not book when 70% or more of overall seats are booked", () => {
     const trainService = new TrainServiceTests();
     jest.spyOn(trainService, "getTrainData").mockImplementation(() => mockedTrains.seventyPercentOverallBooked);
     const reservationRequest = new BuildReservationRequest().build();
@@ -44,6 +44,16 @@ describe("ticketOffice tests", () => {
   it("should not book when more than 70% or more of a coach seats are booked", () => {
     const trainService = new TrainServiceTests();
     jest.spyOn(trainService, "getTrainData").mockImplementation(() => mockedTrains.seventyPercentCoachBooked);
+    const reservationRequest = new BuildReservationRequest().build();
+
+    const reservation = new TicketOffice(trainService).makeReservation(reservationRequest);
+
+    expect(reservation.bookingId).toStrictEqual("");
+    expect(reservation.seats).toHaveLength(0);
+  });
+  it("should not book when 70% or more of overall seats will be booked with the new reservation", () => {
+    const trainService = new TrainServiceTests();
+    jest.spyOn(trainService, "getTrainData").mockImplementation(() => mockedTrains.seventyPercentOverallAlmostBooked);
     const reservationRequest = new BuildReservationRequest().build();
 
     const reservation = new TicketOffice(trainService).makeReservation(reservationRequest);

@@ -14,7 +14,7 @@ class TicketOffice {
   makeReservation(request: ReservationRequest): Reservation {
     const train = this.trainDataService.getTrainData(request.trainId);
 
-    const isTrainBooked = checkIfTrainIsBooked(train);
+    const isTrainBooked = checkIfTrainIsBooked(train, request.seatCount);
 
     if (isTrainBooked) {
       return new Reservation(request.trainId, [], "");
@@ -32,7 +32,7 @@ class TicketOffice {
   }
 }
 
-function checkIfTrainIsBooked(train: Train): boolean {
+function checkIfTrainIsBooked(train: Train, reservationSeatCount: number): boolean {
   const { bookedSeats, totalSeats } = train.coaches.reduce(
     (acc, current) => ({
       bookedSeats: acc.bookedSeats + current.seats.filter((seat) => seat.bookingReference !== "").length,
@@ -41,7 +41,7 @@ function checkIfTrainIsBooked(train: Train): boolean {
     { bookedSeats: 0, totalSeats: 0 }
   );
 
-  return (bookedSeats / totalSeats) * 100 >= 70;
+  return ((bookedSeats + reservationSeatCount) / totalSeats) * 100 >= 70;
 }
 
 function pickCoachWithEnoughAvailableSeats(train: Train, seatCount: number): Coach | undefined {

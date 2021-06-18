@@ -46,9 +46,12 @@ function checkIfTrainIsBooked(train: Train): boolean {
 
 function pickCoachWithEnoughAvailableSeats(train: Train, seatCount: number): Coach | undefined {
   const [coachWithEnoughAvailableSeats] = train.coaches.filter((coach) => {
-    const availableSeats = coach.seats.filter((seat) => seat.bookingReference === "");
+    const availableSeatsCount = coach.seats.filter((seat) => seat.bookingReference === "").length;
 
-    return availableSeats.length >= seatCount;
+    const isThereEnoughSeats = availableSeatsCount >= seatCount;
+    const isCoachBooked = ((coach.seats.length - availableSeatsCount) / coach.seats.length) * 100 >= 70;
+
+    return isThereEnoughSeats && !isCoachBooked;
   });
 
   return coachWithEnoughAvailableSeats;

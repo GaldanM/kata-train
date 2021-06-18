@@ -43,5 +43,27 @@
 				]
 			}
 		]
+	},
+	"seventyPercentCoachBooked": {
+		"coaches": [
+			{
+				"name": "A",
+				"seats": [
+					{"seatNumber": "1", "bookingReference": ""},
+					{"seatNumber": "1", "bookingReference": ""},
+					{"seatNumber": "2", "bookingReference": "faz"},
+					{"seatNumber": "3", "bookingReference": "fur"},
+					{"seatNumber": "4", "bookingReference": "fouz"},
+					{"seatNumber": "5", "bookingReference": "foz"},
+					{"seatNumber": "6", "bookingReference": "fz"}
+				]
+			},
+			{
+				"name": "B",
+				"seats": [
+					{"seatNumber": "1", "bookingReference": ""}
+				]
+			}
+		]
 	}
 }

@@ -12,15 +12,15 @@ class TicketOffice {
   }
 
   makeReservation(request: ReservationRequest): Reservation {
-    const train = this.trainDataService.getTrainData(request.trainId);
+    this.trainDataService.getTrainData(request.trainId);
 
-    const isTrainBooked = checkIfTrainIsBooked(train, request.seatCount);
+    const isTrainBooked = this.checkIfTrainIsBooked(request.seatCount);
 
     if (isTrainBooked) {
       return new Reservation(request.trainId, [], "");
     }
 
-    const coachWithEnoughAvailableSeats = pickCoachWithEnoughAvailableSeats(train, request.seatCount);
+    const coachWithEnoughAvailableSeats = this.trainDataService.getCoachWithEnoughAvailableSeats(request.seatCount);
 
     if (!coachWithEnoughAvailableSeats) {
       return new Reservation(request.trainId, [], "");
@@ -30,31 +30,12 @@ class TicketOffice {
 
     return new Reservation(request.trainId, seatsToReserve, "foobar");
   }
-}
 
-function checkIfTrainIsBooked(train: Train, reservationSeatCount: number): boolean {
-  const { bookedSeats, totalSeats } = train.coaches.reduce(
-    (acc, current) => ({
-      bookedSeats: acc.bookedSeats + current.seats.filter((seat) => seat.bookingReference !== "").length,
-      totalSeats: acc.totalSeats + current.seats.length,
-    }),
-    { bookedSeats: 0, totalSeats: 0 }
-  );
+  checkIfTrainIsBooked(reservationSeatCount: number): boolean {
+    const { bookedSeats, totalSeats } = this.trainDataService.getTrainStatus();
 
-  return ((bookedSeats + reservationSeatCount) / totalSeats) * 100 >= 70;
-}
-
-function pickCoachWithEnoughAvailableSeats(train: Train, seatCount: number): Coach | undefined {
-  const [coachWithEnoughAvailableSeats] = train.coaches.filter((coach) => {
-    const availableSeatsCount = coach.seats.filter((seat) => seat.bookingReference === "").length;
-
-    const isThereEnoughSeats = availableSeatsCount >= seatCount;
-    const isCoachBooked = ((coach.seats.length - availableSeatsCount) / coach.seats.length) * 100 >= 70;
-
-    return isThereEnoughSeats && !isCoachBooked;
-  });
-
-  return coachWithEnoughAvailableSeats;
+    return ((bookedSeats + reservationSeatCount) / totalSeats) * 100 >= 70;
+  }
 }
 
 export default TicketOffice;

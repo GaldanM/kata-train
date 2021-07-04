@@ -1,7 +1,8 @@
-import type { Train } from "./types";
+import type { Coach } from "./types";
 
 interface TrainService {
-  getTrainData: (trainId: string) => Train;
+  getTrainStatus: () => { bookedSeats: number; totalSeats: number };
+  getCoachWithEnoughAvailableSeats: (seatCount: number) => Coach | undefined;
 }
 
 export default TrainService;
